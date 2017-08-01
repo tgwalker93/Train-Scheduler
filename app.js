@@ -19,31 +19,18 @@
   var nextArrival= "";
   var minutesAway = "";
 
-  // database.ref().push({
-  //     name: name,
-  //     role: role,
-  //     startDate: startDate,
-  //     monRate: monRate
-
-  // })
 
 
   $("#submit-bid").on("click", function() {
       // Don't refresh the pstartDate!
       event.preventDefault();
 
-      // YOUR TASK!!!
-      // Code in the logic for storing and retrieving the most recent user.
-      // Don't forget to provide initial data to your Firebase database.
       name = $("#train-name").val().trim();
       destination = $("#destination").val().trim();
       firstTrainTime = $("#firstTrainTime").val().trim();
       frequency = $("#frequency").val().trim();
-      // To calculate the months worked
-      // var monthsWorked = moment().diff(moment.unix(startDate, "X"), "months");
-      // console.log(monthsWorked);
 
-      // totalBiled = 
+
       var currentTime = moment().format('LT');
       // Changed to hh:mm format. subtract a year to make sure it comes before current time.
       var trainTimePretty = moment(firstTrainTime, "hh:mm");
@@ -66,7 +53,7 @@
       console.log("Difference in time: " + diffTime);
       console.log("Remainder: " + remainderTime);
       console.log("Next arrival: " + moment(trainNext).format("hh:mm"));
-        minutesAway = nextArrival;
+        minutesAway = trainMinutesAway;
 
       var firstTrainCurrentTimeDifference = moment(firstTrainTime).diff(moment(), "minutes");
       database.ref().push({
@@ -98,33 +85,21 @@
       // Don't refresh the pstartDate!
       event.preventDefault();
 
-      // YOUR TASK!!!
-      // Code in the logic for storing and retrieving the most recent user.
-      // Don't forget to provide initial data to your Firebase database.
       name = ""
       destination = ""
       firstTrainTime = ""
       frequency = ""
 
-      // database.ref().push({
-      // name: name,
-      // role: role,
-      // startDate: startDate,
-      // monRate: monRate
-      //  });
+      database.ref().remove();
+      $("#tableBody").html("");
 
-      // database.ref("inclassproject-d543c").remove();
 
   });
-  // Firebase watcher + initial loader HINT: .on("value")
 
-
-  // function addEmployee() {
 
 
   database.ref().on("child_added", function(snapshot) {
 
-      // Log everything that's coming out of snapshot
 
       console.log(snapshot.val());
 
@@ -147,26 +122,7 @@
 
       monthsWorked = snapshot.val().firstTrainTime;
 
-      // monRate = snapshot.val().monRate;
 
-      $("#currentEmployeeBody").append(
-          "<div class='well'>" +
-          " name : " + name +
-          " destination : " + destination +
-          " startDate : " + firstTrainTime +
-          " monRate : " + frequency +
-          "</div>"
-      );
-
-
-
-      // $("#name-display").html(snapshot.val().name);
-
-      // $("#role-display").html(snapshot.val().role);
-
-      // $("#startDate-display").html(snapshot.val().startDate);
-
-      // $("#monthly-rate").html(snapshot.val().monRate);
 
       // Handle the errors
 
@@ -176,5 +132,3 @@
 
   });
 
-
-  // }
